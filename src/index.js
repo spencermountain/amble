@@ -38,7 +38,7 @@ var doit = function() {
   console.log('\n\n\n\n\n\n\n');
 };
 
-// run();
+
 var watch = function(dirList) {
   gaze(dirList, options, function(err) {
     if (err) {
@@ -53,5 +53,6 @@ var watch = function(dirList) {
     });
   });
 }
+doit();
 
 module.exports = watch
