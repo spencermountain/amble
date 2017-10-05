@@ -1,7 +1,7 @@
 {
   "name": "amble",
   "description": "a nice watcher for software development",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "repository": {
     "type": "git",
