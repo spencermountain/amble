@@ -1,21 +1,27 @@
 # amble
-a cleaner watch script for node.js development
+a clean way to 'hot-reload' a node.js script in the console.
 
 `npm i amble`
 
 then in your project
 
-`amble .`
+`amble ./toRun.js`
 
-this will run your either `index.js`, or the `main` from `package.json`, whenever a file changes in your repo.
+this will run file and watch all relevant files recursively.
 
 i like to create a `./scratch.js` file, with my current stuff in it, so i run put this in my package.json:
 ```json
 {
 	"scripts":{
-		"watch":"amble ./scratch.js --exclude ./builds"
+		"watch":"amble ./scratch.js"
 	}
 }
+```
+
+### javascript access
+```js
+var amble=require('amble')
+amble({exec:'./scratch', watch:'./'})
 ```
 
 huge thanks to Kyle Robinson Young's [gaze library](https://github.com/shama/gaze)

@@ -1,7 +1,10 @@
 var exec = require('shelljs').exec
+var fs = require('fs');
+var path = require('path');
 var gaze = require('gaze');
 var chalk = require('chalk');
-//this is a nice way to 'hot-reload' compromise, while debugging something from ./scratch.js
+var banner = require('./banner')
+var cwd = process.cwd()
 
 var options = {
   interval: 1,
@@ -9,38 +12,29 @@ var options = {
   wait: 2
 };
 
-var banner = function() {
-  var emojis = {
-    lemon: chalk.yellow('🍋'),
-    flower: chalk.red('🌼'),
-    check: chalk.green('✅'),
-    boat: chalk.blue('⛵ '),
-    sun: chalk.yellow('🌞 '),
-    sprout: chalk.green('🌱 '),
-    time: chalk.green('🕙 '),
-    shirt: chalk.blue('👕 '),
-    hat: chalk.magenta('🎩 '),
-    orange: chalk.red('🍑 '),
-    candy: chalk.magenta('🍬 '),
-    lollypop: chalk.red('🍭 '),
-    dress: chalk.red('👗 '),
-    happy: chalk.green('😊 '),
-    trumpet: chalk.yellow('🎺 ')
+
+var watch = function(file) {
+
+  //understand relative links
+  var abs = path.resolve(cwd, file);
+  var obj = {
+    exec: abs,
+    watch: path.dirname(abs)
+  }
+
+
+  var doit = function() {
+    console.log(banner());
+    var cmd = 'node ' + obj.exec + ' --debug --color'
+    exec(cmd);
+    console.log('\n\n\n\n\n\n\n');
   };
-  var keys = Object.keys(emojis);
-  var r = parseInt(Math.random() * keys.length - 1, 10);
-  return emojis[keys[r]];
-};
 
-var doit = function() {
-  console.log(banner());
-  exec('node ./scratch.js --debug --color');
-  console.log('\n\n\n\n\n\n\n');
-};
-
-
-var watch = function(dirList) {
-  gaze(dirList, options, function(err) {
+  //set-up the watcher
+  var watch = obj.watch + '/**/*.js'
+  let node_modules = '!**/node_modules/**'
+  let git = '!**/.git/**'
+  gaze([watch, node_modules, git], options, function(err) {
     if (err) {
       console.log(err);
     }
@@ -52,7 +46,12 @@ var watch = function(dirList) {
       doit();
     });
   });
+
+  //do it right-away
+  var rel = path.relative(cwd, watch);
+  console.log(chalk.grey('watching: ') + chalk.blue(rel))
+  console.log('\n\n')
+  doit();
 }
-doit();
 
 module.exports = watch
