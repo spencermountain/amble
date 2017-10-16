@@ -32,8 +32,8 @@ var watch = function(file) {
 
   //set-up the watcher
   var watch = obj.watch + '/**/*.js'
-  let node_modules = '!**/node_modules/**'
-  let git = '!**/.git/**'
+  var node_modules = '!**/node_modules/**'
+  var git = '!**/.git/**'
   gaze([watch, node_modules, git], options, function(err) {
     if (err) {
       console.log(err);
