@@ -26,8 +26,6 @@ var rando = function() {
 //print a nice emoji
 var banner = function() {
   var str = '             ' + rando()
-  // str += '               ' // + rando()
-  // str += '         ' + rando()
   return str + '\n'
 };
 module.exports = banner
