@@ -24,6 +24,11 @@ var amble=require('amble')
 amble({exec:'./scratch', watch:'./'})
 ```
 
+if you want to pass arguments into node, put them after your filename:
+```
+amble scratch.mjs --experimental-modules
+```
+
 huge thanks to Kyle Robinson Young's [gaze library](https://github.com/shama/gaze)
 
 MIT

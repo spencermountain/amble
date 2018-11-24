@@ -11,7 +11,9 @@ var options = {
   wait: 2
 };
 
-var watch = function(file) {
+var watch = function(file, args) {
+  console.log(args)
+  arg = args || ''
   //first, understand relative links
   var abs = path.resolve(cwd, file);
   var obj = {
@@ -22,7 +24,7 @@ var watch = function(file) {
   //run our exec function
   var doit = function() {
     console.log(banner());
-    var cmd = 'node ' + obj.exec + ' --debug --color'
+    var cmd = `node ${args} ${obj.exec } --debug --color`
     exec(cmd);
     console.log('\n\n\n\n\n\n\n');
   };
