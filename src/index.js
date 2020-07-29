@@ -23,7 +23,11 @@ var watch = function (file, args) {
   var doit = function () {
     console.log(banner())
     var cmd = `node ${args} ${obj.exec} --debug --color`
-    exec(cmd)
+    try {
+      exec(cmd)
+    } catch (e) {
+      // console.log('caught')
+    }
     console.log('\n\n\n\n\n\n\n')
   }
   //set-up the watcher
@@ -34,6 +38,7 @@ var watch = function (file, args) {
   console.log(color.gray('watching: ') + color.blue(rel))
   console.log('\n\n')
 
+  // let changes = 0
   const watcher = chokidar
     .watch(init, {
       ignored: [/node_modules/, /(^|[\/\\])\../],
@@ -50,11 +55,9 @@ var watch = function (file, args) {
     })
     .on('change', () => {
       doit()
+      // changes += 1
     })
     .on('unlink', () => {
-      doit()
-    })
-    .on('unlinkDir', () => {
       doit()
     })
 }
