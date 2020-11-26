@@ -7,7 +7,9 @@ var cp = require('child_process')
 var cwd = process.cwd()
 
 var exec = function (cmd) {
-  console.log(cp.execSync(cmd, { encoding: 'utf8', silent: false }))
+  console.log(
+    cp.execSync(cmd, { encoding: 'utf8', silent: false, stdio: 'inherit' })
+  )
 }
 
 var watch = function (file, args) {
@@ -48,6 +50,9 @@ var watch = function (file, args) {
       doit()
       watcher.on('add', () => {
         doit()
+      })
+      watcher.on('error', () => {
+        console.log('=-=-error=-=-')
       })
       watcher.on('addDir', () => {
         doit()
