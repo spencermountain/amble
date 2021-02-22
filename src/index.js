@@ -7,9 +7,7 @@ var cp = require('child_process')
 var cwd = process.cwd()
 
 var exec = function (cmd) {
-  console.log(
-    cp.execSync(cmd, { encoding: 'utf8', silent: false, stdio: 'inherit' })
-  )
+  cp.execSync(cmd, { encoding: 'utf8', silent: false, stdio: 'inherit' })
 }
 
 var watch = function (file, args) {
@@ -23,7 +21,7 @@ var watch = function (file, args) {
 
   //run our exec function
   var doit = function () {
-    console.log(banner())
+    console.log(banner() || '')
     var cmd = `node ${args} ${obj.exec} --debug --color`
     try {
       exec(cmd)
